@@ -14,9 +14,9 @@ const SEO: React.FC<SEOProps> = ({ title, description, image }) => {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-      <meta name="twitter:card" content="summary_large_image" />
+      {/*<meta name="twitter:card" content="summary_large_image" />*/}
       <meta property="twitter:domain" content="luddy.dance" />
-      <meta property="twitter:url" content="http://luddy.dance" />
+      <meta property="twitter:url" content="https://luddy.dance" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
