@@ -2,7 +2,6 @@
 import React from 'react';
 import SEO from '@/components/SEO';
 import { Inter } from "next/font/google";
-import '../assets/styles/globals.css';
 import Copyright from '@/components/Copyright';
 
 interface LayoutProps {
