@@ -21,7 +21,7 @@ export default function RootLayout( {
     <SEO
       title={String(metadata.title || '')}
       description={String(metadata.description || '')}
-      image="https://luddy.dance/10hours-luddy.webp"
+      image={String("https://luddy.dance/10hours-luddy.webp")}
     />
     <body className={ inter.className }>
     <div>
