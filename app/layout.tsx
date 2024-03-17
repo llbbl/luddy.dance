@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Copyright from '@/components/Copyright';
+import SEO from '@/components/SEO';
 
 const inter = Inter( { subsets: [ "latin" ] } );
 
@@ -17,10 +18,11 @@ export default function RootLayout( {
 }> ) {
   return (
     <html lang="en">
-    <head>
-      <title>{ String( metadata.title || '' ) }</title>
-      <meta name="description" content={ String( metadata.description || '' ) }/>
-    </head>
+    <SEO
+      title={String(metadata.title || '')}
+      description={String(metadata.description || '')}
+      image="/10hours-luddy.png"
+    />
     <body className={ inter.className }>
     <div>
       { children }
