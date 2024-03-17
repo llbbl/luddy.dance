@@ -21,7 +21,7 @@ export default function Component() {
           )}
           <iframe
             className="absolute top-0 left-0 w-full h-auto" // Make the iframe fill the container
-            src="https://www.youtube.com/embed/gagWPnjv_NU"
+            src="https://www.youtube.com/embed/L3Ucukzbp6k"
             title="YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
