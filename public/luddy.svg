@@ -1,0 +1,8 @@
+<svg width="640" height="360" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .title { font: bold 4rem sans-serif; }
+        .subtitle { font: bold 2rem sans-serif; }
+    </style>
+    <text x="150" y="70" class="title">Loading</text>
+    <text x="150" y="120" class="subtitle">Luddy.dance</text>
+</svg>
