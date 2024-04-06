@@ -1,0 +1,40 @@
+# Ignore Git configuration
+.git
+.gitignore
+
+# Ignore Docker configuration
+Dockerfile
+.dockerignore
+
+# Ignore Node.js dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Ignore build artifacts
+.next
+out
+
+# Ignore development files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore editor and IDE files
+.vscode
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Ignore testing files
+coverage
+.nyc_output
+
+# Ignore logs and temporary files
+logs
+*.log
+tmp
+.DS_Store
