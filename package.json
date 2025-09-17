@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "biome:check": "biome check .",
+    "biome:lint": "biome lint .",
+    "biome:format": "biome format . --write",
+    "biome:fix": "biome check . --write"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -15,6 +19,7 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.4",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^24.5.1",
     "@types/react": "^19.1.13",
