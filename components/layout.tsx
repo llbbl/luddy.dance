@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import type React from 'react';
 import Copyright from '@/components/Copyright';
 import SEO from '@/components/SEO';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,7 +21,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
       <SEO title={seoData.title} description={seoData.description} image={seoData.image} />
-      {children}
+      <ErrorBoundary>
+        {children}
+      </ErrorBoundary>
       <Copyright />
     </>
   );

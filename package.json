@@ -20,6 +20,7 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
+    "logan-logger": "^1.1.6",
     "next": "15.5.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
