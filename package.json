@@ -17,7 +17,10 @@
     "biome:lint": "biome lint .",
     "biome:format": "biome format . --write",
     "biome:fix": "biome check . --write",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "lighthouse": "lhci autorun",
+    "lighthouse:collect": "lhci collect",
+    "lighthouse:assert": "lhci assert"
   },
   "dependencies": {
     "logan-logger": "^1.1.6",
@@ -27,6 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
+    "@lhci/cli": "^0.15.1",
     "@next/bundle-analyzer": "^15.5.3",
     "@tailwindcss/postcss": "^4.1.13",
     "@testing-library/jest-dom": "^6.8.0",
