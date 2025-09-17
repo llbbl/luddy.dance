@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Component() {
   const [isIframeLoaded, setIframeLoaded] = useState(false);
@@ -36,7 +36,6 @@ export default function Component() {
         <section
           className="aspect-youtube w-full flex justify-center relative"
           style={{ maxWidth: '80vw' }}
-          role="region"
           aria-label="Ludwig Luddy dance video player"
         >
           {!isIframeLoaded && (
@@ -52,7 +51,7 @@ export default function Component() {
           <iframe
             ref={iframeRef}
             className="absolute top-0 left-0 w-full h-auto"
-            src={shouldLoadIframe ? "https://www.youtube.com/embed/L3Ucukzbp6k" : undefined}
+            src={shouldLoadIframe ? 'https://www.youtube.com/embed/L3Ucukzbp6k' : undefined}
             title="10 hours of Ludwig doing the Luddy dance - YouTube video player"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -61,7 +60,6 @@ export default function Component() {
             onLoad={() => setIframeLoaded(true)}
             role="application"
             aria-label="Embedded YouTube video: 10 hours of Ludwig doing the Luddy dance"
-            tabIndex={0}
             style={{
               aspectRatio: '16 / 9',
               visibility: isIframeLoaded ? 'visible' : 'hidden',

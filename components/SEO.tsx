@@ -8,48 +8,54 @@ interface SEOProps {
   canonical?: string;
 }
 
-const SEO: React.FC<SEOProps> = ({ title, description, image, url = 'https://luddy.dance', canonical }) => {
+const SEO: React.FC<SEOProps> = ({
+  title,
+  description,
+  image,
+  url = 'https://luddy.dance',
+  canonical,
+}) => {
   const canonicalUrl = canonical || url;
 
   const videoStructuredData = {
-    "@context": "https://schema.org",
-    "@graph": [
+    '@context': 'https://schema.org',
+    '@graph': [
       {
-        "@type": "WebSite",
-        "@id": "https://luddy.dance/#website",
-        "url": "https://luddy.dance",
-        "name": "Luddy Dance",
-        "description": "Join the dance with Ludwig and enjoy 10 hours of the Luddy dance!",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://luddy.dance?q={search_term_string}"
+        '@type': 'WebSite',
+        '@id': 'https://luddy.dance/#website',
+        url: 'https://luddy.dance',
+        name: 'Luddy Dance',
+        description: 'Join the dance with Ludwig and enjoy 10 hours of the Luddy dance!',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: 'https://luddy.dance?q={search_term_string}',
           },
-          "query-input": "required name=search_term_string"
-        }
+          'query-input': 'required name=search_term_string',
+        },
       },
       {
-        "@type": "VideoObject",
-        "@id": "https://luddy.dance/#video",
-        "name": title,
-        "description": description,
-        "thumbnailUrl": image,
-        "uploadDate": "2023-01-01",
-        "duration": "PT10H",
-        "embedUrl": "https://www.youtube.com/embed/L3Ucukzbp6k",
-        "contentUrl": "https://www.youtube.com/watch?v=L3Ucukzbp6k",
-        "publisher": {
-          "@type": "Organization",
-          "name": "Luddy Dance",
-          "url": "https://luddy.dance"
+        '@type': 'VideoObject',
+        '@id': 'https://luddy.dance/#video',
+        name: title,
+        description: description,
+        thumbnailUrl: image,
+        uploadDate: '2023-01-01',
+        duration: 'PT10H',
+        embedUrl: 'https://www.youtube.com/embed/L3Ucukzbp6k',
+        contentUrl: 'https://www.youtube.com/watch?v=L3Ucukzbp6k',
+        publisher: {
+          '@type': 'Organization',
+          name: 'Luddy Dance',
+          url: 'https://luddy.dance',
         },
-        "creator": {
-          "@type": "Person",
-          "name": "Ludwig"
-        }
-      }
-    ]
+        creator: {
+          '@type': 'Person',
+          name: 'Ludwig',
+        },
+      },
+    ],
   };
 
   return (
