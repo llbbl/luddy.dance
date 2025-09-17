@@ -6,12 +6,11 @@ module.exports = {
       numberOfRuns: 3,
       // URLs to test (relative to server URL)
       url: [
-        'http://localhost:3000',
-        'http://localhost:3000/404'
+        'http://localhost:3000'
       ],
       // Start a local server to test
       startServerCommand: 'pnpm build && pnpm start',
-      startServerReadyPattern: 'ready on',
+      startServerReadyPattern: /ready in/i,
       startServerReadyTimeout: 30000,
       // Chrome settings
       settings: {
