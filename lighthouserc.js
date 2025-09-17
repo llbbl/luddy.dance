@@ -62,9 +62,9 @@ module.exports = {
         'modern-image-formats': 'off', // We're already using WebP
         'uses-optimized-images': 'warn',
 
-        // Best practices
-        'uses-https': 'error',
-        'uses-http2': 'warn',
+        // Best practices (disabled for localhost testing)
+        'is-on-https': 'off', // Disabled for localhost testing
+        'uses-http2': 'off', // Disabled for localhost testing
         'efficient-animated-content': 'warn',
       },
 
