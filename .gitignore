@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Bundle analyzer reports (ignore HTML files, keep config)
+/.next/analyze/*.html

@@ -10,7 +10,7 @@ This is a Next.js application showcasing a 10-hour loop of Ludwig doing the "Lud
 
 - **Framework**: Next.js 14 (Pages Router)
 - **Styling**: Tailwind CSS
-- **Runtime**: Node.js 18
+- **Runtime**: Node.js 22
 - **Package Manager**: pnpm (configured in Dockerfile and user preferences)
 - **TypeScript**: Fully configured with strict mode
 
@@ -36,7 +36,7 @@ pnpm lint
 # Build Docker image
 docker buildx build --load -t luddy-local .
 
-# The Docker setup uses pnpm and Node.js 18
+# The Docker setup uses pnpm and Node.js 22
 ```
 
 ## Architecture
