@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { log, reportError, trackPerformance, setUserContext } from '@/lib/logger';
+import { log, reportError, setUserContext, trackPerformance } from '@/lib/logger';
 
 export default function Component() {
   const [isIframeLoaded, setIframeLoaded] = useState(false);

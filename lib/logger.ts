@@ -20,10 +20,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 // Enable logging in development, preview environments, or when explicitly enabled
 const shouldEnableLogging =
   isDevelopment ||
-  (typeof window !== 'undefined' && (
-    window.location.hostname.includes('vercel.app') ||
-    window.location.hostname.includes('localhost')
-  )) ||
+  (typeof window !== 'undefined' &&
+    (window.location.hostname.includes('vercel.app') ||
+      window.location.hostname.includes('localhost'))) ||
   process.env.NEXT_PUBLIC_ENABLE_LOGGING === 'true';
 
 // Force console fallback in preview/development environments
@@ -35,7 +34,7 @@ const safeLog = (shouldEnableLogging && loganBaseLog) || {
   debug: () => {},
   info: () => {},
   warn: () => {},
-  error: () => {}
+  error: () => {},
 };
 
 // Type for metadata objects
@@ -74,7 +73,7 @@ const fallbackLog = {
     } else {
       safeLog.error(message, meta);
     }
-  }
+  },
 };
 
 // LoganLogger class for structured logging with context
@@ -123,7 +122,12 @@ export const log = {
   },
 
   appError: (error: Error, meta?: LogMetadata) => {
-    fallbackLog.error('Application error', { event: 'app_error', error: error.message, stack: error.stack, ...meta });
+    fallbackLog.error('Application error', {
+      event: 'app_error',
+      error: error.message,
+      stack: error.stack,
+      ...meta,
+    });
   },
 
   // Page navigation events
@@ -179,7 +183,11 @@ export const trackPerformance = (metric: string, value: number, context?: LogMet
 };
 
 // User context tracking using logan-logger's pageLoad method
-export const setUserContext = (userId?: string, sessionId?: string, additionalContext?: LogMetadata) => {
+export const setUserContext = (
+  userId?: string,
+  sessionId?: string,
+  additionalContext?: LogMetadata
+) => {
   const contextMeta = {
     userId,
     sessionId,

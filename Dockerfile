@@ -8,8 +8,10 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Override NPM registry to use public registry during build
+# This prevents issues with local registry references in .npmrc
+RUN echo "registry=https://registry.npmjs.org/" > .npmrc && \
+    pnpm install --frozen-lockfile
 
 # Stage 2: Builder
 FROM node:24-alpine AS builder
@@ -21,6 +23,9 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Override NPM registry again for any build-time installs
+RUN echo "registry=https://registry.npmjs.org/" > .npmrc
 
 # Build the application
 RUN pnpm run build

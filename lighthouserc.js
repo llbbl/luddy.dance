@@ -5,9 +5,7 @@ module.exports = {
       // Number of runs per URL
       numberOfRuns: 3,
       // URLs to test (relative to server URL)
-      url: [
-        'http://localhost:3000'
-      ],
+      url: ['http://localhost:3000'],
       // Start a local server to test
       startServerCommand: 'pnpm build && pnpm start',
       startServerReadyPattern: /ready in/i,
@@ -23,9 +21,9 @@ module.exports = {
           'screenshot-thumbnails',
           'final-screenshot',
           'largest-contentful-paint-element',
-          'layout-shift-elements'
-        ]
-      }
+          'layout-shift-elements',
+        ],
+      },
     },
 
     // Upload settings (configure for your preferred service)
@@ -76,16 +74,16 @@ module.exports = {
             { metric: 'first-contentful-paint', budget: 3000 },
             { metric: 'largest-contentful-paint', budget: 4000 },
             { metric: 'speed-index', budget: 4000 },
-            { metric: 'interactive', budget: 5000 }
+            { metric: 'interactive', budget: 5000 },
           ],
           resourceSizes: [
             { resourceType: 'script', budget: 150 }, // KB
             { resourceType: 'image', budget: 300 },
             { resourceType: 'stylesheet', budget: 50 },
-            { resourceType: 'total', budget: 500 }
-          ]
-        }
-      ]
-    }
-  }
+            { resourceType: 'total', budget: 500 },
+          ],
+        },
+      ],
+    },
+  },
 };

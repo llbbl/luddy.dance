@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 
 interface SEOProps {
   title: string;
@@ -59,45 +60,51 @@ const SEO: React.FC<SEOProps> = ({
   };
 
   return (
-    <Head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>{title}</title>
-      <meta name="description" content={description} />
-      <link rel="canonical" href={canonicalUrl} />
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
 
-      {/* Open Graph */}
-      <meta property="og:type" content="video.other" />
-      <meta property="og:site_name" content="Luddy Dance" />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:image:alt" content="Ludwig dancing the Luddy dance" />
-      <meta property="og:url" content={url} />
-      <meta property="og:locale" content="en_US" />
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
 
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@luddy_dance" />
-      <meta name="twitter:creator" content="@luddy_dance" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
-      <meta name="twitter:image:alt" content="Ludwig dancing the Luddy dance" />
-      <meta name="twitter:domain" content="luddy.dance" />
-      <meta name="twitter:url" content={url} />
+        {/* Open Graph */}
+        <meta property="og:type" content="video.other" />
+        <meta property="og:site_name" content="Luddy Dance" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
+        <meta property="og:image:alt" content="Ludwig dancing the Luddy dance" />
+        <meta property="og:url" content={url} />
+        <meta property="og:locale" content="en_US" />
 
-      {/* Additional SEO */}
-      <meta name="robots" content="index, follow" />
-      <meta name="author" content="Luddy Dance" />
-      <meta name="keywords" content="Ludwig, Luddy, dance, meme, 10 hours, loop, entertainment" />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@luddy_dance" />
+        <meta name="twitter:creator" content="@luddy_dance" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
+        <meta name="twitter:image:alt" content="Ludwig dancing the Luddy dance" />
+        <meta name="twitter:domain" content="luddy.dance" />
+        <meta name="twitter:url" content={url} />
+
+        {/* Additional SEO */}
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Luddy Dance" />
+        <meta name="keywords" content="Ludwig, Luddy, dance, meme, 10 hours, loop, entertainment" />
+      </Head>
 
       {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoStructuredData) }}
-      />
-    </Head>
+      <Script id="structured-data" type="application/ld+json" strategy="beforeInteractive">
+        {JSON.stringify(videoStructuredData)}
+      </Script>
+    </>
   );
 };
 

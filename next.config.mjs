@@ -9,11 +9,6 @@ const nextConfig = {
   // Enable standalone output for optimized Docker builds
   output: 'standalone',
 
-  eslint: {
-    // Disable ESLint during builds since we're using Biome
-    ignoreDuringBuilds: true,
-  },
-
   // Security headers configuration
   async headers() {
     return [
@@ -37,32 +32,32 @@ const nextConfig = {
               "base-uri 'self'",
               "form-action 'self'",
               "frame-ancestors 'none'",
-              "upgrade-insecure-requests"
-            ].join('; ')
+              'upgrade-insecure-requests',
+            ].join('; '),
           },
 
           // Prevent clickjacking attacks
           {
             key: 'X-Frame-Options',
-            value: 'DENY'
+            value: 'DENY',
           },
 
           // Prevent MIME type sniffing
           {
             key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            value: 'nosniff',
           },
 
           // Enable XSS protection
           {
             key: 'X-XSS-Protection',
-            value: '1; mode=block'
+            value: '1; mode=block',
           },
 
           // Referrer policy for privacy
           {
             key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
+            value: 'strict-origin-when-cross-origin',
           },
 
           // Permissions policy (formerly Feature Policy)
@@ -78,31 +73,35 @@ const nextConfig = {
               'autoplay=(self "https://www.youtube.com")',
               'encrypted-media=(self "https://www.youtube.com")',
               'fullscreen=(self "https://www.youtube.com")',
-              'picture-in-picture=(self "https://www.youtube.com")'
-            ].join(', ')
+              'picture-in-picture=(self "https://www.youtube.com")',
+            ].join(', '),
           },
 
           // Strict Transport Security (HSTS) - only enable in production
-          ...(process.env.NODE_ENV === 'production' ? [{
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload'
-          }] : []),
+          ...(process.env.NODE_ENV === 'production'
+            ? [
+                {
+                  key: 'Strict-Transport-Security',
+                  value: 'max-age=31536000; includeSubDomains; preload',
+                },
+              ]
+            : []),
 
           // Cross-Origin policies
           {
             key: 'Cross-Origin-Embedder-Policy',
-            value: 'unsafe-none' // Required for YouTube embeds
+            value: 'unsafe-none', // Required for YouTube embeds
           },
           {
             key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin-allow-popups'
+            value: 'same-origin-allow-popups',
           },
           {
             key: 'Cross-Origin-Resource-Policy',
-            value: 'cross-origin'
-          }
-        ]
-      }
+            value: 'cross-origin',
+          },
+        ],
+      },
     ];
   },
 };

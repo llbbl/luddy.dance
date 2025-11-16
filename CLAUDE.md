@@ -8,11 +8,14 @@ This is a Next.js application showcasing a 10-hour loop of Ludwig doing the "Lud
 
 ## Technology Stack
 
-- **Framework**: Next.js 14 (Pages Router)
-- **Styling**: Tailwind CSS
-- **Runtime**: Node.js 22
-- **Package Manager**: pnpm (configured in Dockerfile and user preferences)
-- **TypeScript**: Fully configured with strict mode
+- **Framework**: Next.js 16.0.3 (Pages Router)
+- **React**: 19.2.0
+- **Styling**: Tailwind CSS 4.1.17
+- **Runtime**: Node.js 24.x (CI tests on 20.x, 22.x, 24.x)
+- **Package Manager**: pnpm 10.x+
+- **TypeScript**: 5.9 with strict mode
+- **Testing**: Vitest 4.0 + React Testing Library
+- **Linting**: Biome 2.3
 
 ## Development Commands
 
@@ -30,14 +33,30 @@ pnpm start
 pnpm lint
 ```
 
-## Docker Commands
+## Docker
+
+### Multi-Stage Build
+The Dockerfile uses an optimized 3-stage build:
+1. **deps**: Install dependencies (Alpine, Node 24)
+2. **builder**: Build the application with Next.js standalone output
+3. **runner**: Minimal runtime image (234MB, 78% reduction from original)
+
+**Key optimizations**:
+- Alpine Linux base (minimal footprint)
+- Next.js standalone output mode (enabled in `next.config.mjs`)
+- Non-root user for security
+- NPM registry override for CI/CD compatibility
+- Only production dependencies in final image
 
 ```bash
 # Build Docker image
-docker buildx build --load -t luddy-local .
+docker buildx build --load -t luddy-dance .
 
-# The Docker setup uses pnpm and Node.js 22
+# Run container
+docker run -p 3000:3000 luddy-dance
 ```
+
+**Note**: The Dockerfile includes `registry=https://registry.npmjs.org/` override to ensure builds work in CI/CD environments with local `.npmrc` configurations.
 
 ## Architecture
 
@@ -51,6 +70,10 @@ docker buildx build --load -t luddy-local .
   - `Copyright.tsx` - Footer copyright component
 - `assets/styles/` - Global CSS styles
 - `public/` - Static assets (images, SVGs, favicon)
+  - `favicon.svg` - Custom "L" favicon (purple/blue gradient)
+  - `favicon.ico` - Generated from SVG using sharp
+- `scripts/` - Utility scripts
+  - `generate-favicon.mjs` - Generates favicon.ico from favicon.svg
 
 ### Key Features
 - YouTube iframe embedding with loading states
@@ -63,6 +86,10 @@ docker buildx build --load -t luddy-local .
 - **Path Aliases**: `@/*` maps to project root via tsconfig.json
 - **Tailwind**: Configured for pages/, components/, and app/ directories
 - **TypeScript**: Strict mode enabled with Next.js plugin
+- **Next.js Config**:
+  - Standalone output mode for optimized Docker builds
+  - Comprehensive security headers (CSP, HSTS, etc.)
+  - Bundle analyzer integration
 
 ## Important Notes
 
