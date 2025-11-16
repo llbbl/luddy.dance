@@ -6,6 +6,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable standalone output for optimized Docker builds
+  output: 'standalone',
+
   eslint: {
     // Disable ESLint during builds since we're using Biome
     ignoreDuringBuilds: true,
