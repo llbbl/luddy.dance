@@ -10,6 +10,11 @@ on:
   # Allow manual trigger
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
@@ -26,128 +31,37 @@ jobs:
         with:
           version: latest
 
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'pnpm'
+          node-version: '24'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build application
-        run: pnpm build
-        env:
-          NODE_ENV: production
+        run: |
+          echo "registry=https://registry.npmjs.org/" > .npmrc
+          pnpm install --frozen-lockfile
 
       - name: Run Lighthouse CI
-        run: |
-          # Install Lighthouse CI globally
-          npm install -g @lhci/cli@0.15.1
-
-          # Run Lighthouse CI
-          lhci autorun
+        run: pnpm lighthouse
         env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
+          NODE_ENV: production
 
       - name: Upload Lighthouse reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: lighthouse-reports
-          path: lighthouse-reports/
+          path: .lighthouseci/
           retention-days: 30
-
-      - name: Comment PR with results
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const path = require('path');
-
-            // Read Lighthouse results
-            const reportsDir = './lighthouse-reports';
-            if (fs.existsSync(reportsDir)) {
-              const files = fs.readdirSync(reportsDir);
-              const manifestFile = files.find(f => f.includes('manifest.json'));
-
-              if (manifestFile) {
-                const manifest = JSON.parse(fs.readFileSync(path.join(reportsDir, manifestFile), 'utf8'));
-
-                let comment = '## 🚀 Lighthouse CI Results\\n\\n';
-
-                manifest.forEach(result => {
-                  const scores = result.summary;
-                  comment += `### ${result.url}\\n\\n`;
-                  comment += `| Category | Score |\\n`;
-                  comment += `|----------|-------|\\n`;
-                  comment += `| Performance | ${Math.round(scores.performance * 100)} |\\n`;
-                  comment += `| Accessibility | ${Math.round(scores.accessibility * 100)} |\\n`;
-                  comment += `| Best Practices | ${Math.round(scores['best-practices'] * 100)} |\\n`;
-                  comment += `| SEO | ${Math.round(scores.seo * 100)} |\\n\\n`;
-                });
-
-                comment += '📊 Full reports are available in the workflow artifacts.';
-
-                github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: comment
-                });
-              }
-            }
-
-  # Performance regression detection
-  performance-budget:
-    runs-on: ubuntu-latest
-    needs: lighthouse
-    if: github.event_name == 'pull_request'
-
-    steps:
-      - name: Download lighthouse reports
-        uses: actions/download-artifact@v4
-        with:
-          name: lighthouse-reports
-          path: lighthouse-reports/
-
-      - name: Check performance budget
-        run: |
-          echo "🎯 Checking performance budgets..."
-
-          # Basic performance budget checking
-          # (In a real setup, you'd parse the JSON and check thresholds)
-          if [ -d "lighthouse-reports" ]; then
-            echo "✅ Lighthouse reports generated successfully"
-            ls -la lighthouse-reports/
-          else
-            echo "❌ No Lighthouse reports found"
-            exit 1
-          fi
-
-  # Send performance metrics to monitoring (placeholder)
-  send-metrics:
-    runs-on: ubuntu-latest
-    needs: lighthouse
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download lighthouse reports
-        uses: actions/download-artifact@v4
-        with:
-          name: lighthouse-reports
-          path: lighthouse-reports/
-
-      - name: Send metrics to monitoring
-        run: |
-          echo "📊 Sending performance metrics to monitoring system..."
-          # Placeholder for sending metrics to your monitoring system
-          # Examples:
-          # - DataDog
-          # - New Relic
-          # - Custom analytics endpoint
-          # - Time series database
-
-          echo "✅ Metrics sent successfully (placeholder)"

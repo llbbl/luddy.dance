@@ -1,4 +1,4 @@
-import { Component, type ReactNode, type ErrorInfo } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { reportError } from '@/lib/logger';
 
 interface ErrorBoundaryProps {
@@ -41,7 +41,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <div className="text-center p-8 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
               <h2 className="text-2xl font-semibold text-white mb-4">Oops! Something went wrong</h2>
               <p className="text-white/80 mb-6">
-                The Luddy dance encountered an unexpected error. Please refresh the page to try again.
+                The Luddy dance encountered an unexpected error. Please refresh the page to try
+                again.
               </p>
               <button
                 type="button"

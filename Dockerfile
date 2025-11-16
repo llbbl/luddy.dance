@@ -1,26 +1,55 @@
-# Use the official Node.js 22 image with Debian Slim as the base
-FROM node:22-slim
-
-# Set the working directory inside the container
+# Stage 1: Dependencies
+FROM node:24-alpine AS deps
 WORKDIR /app
 
-# Install pnpm globally
-RUN npm install -g pnpm
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy pnpm-lock.yaml and package.json to the working directory
-COPY pnpm-lock.yaml package.json ./
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
 
-# Install the application dependencies using pnpm
-RUN pnpm install --frozen-lockfile
+# Override NPM registry to use public registry during build
+# This prevents issues with local registry references in .npmrc
+RUN echo "registry=https://registry.npmjs.org/" > .npmrc && \
+    pnpm install --frozen-lockfile
 
-# Copy the entire application code to the working directory
+# Stage 2: Builder
+FROM node:24-alpine AS builder
+WORKDIR /app
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Copy dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the Next.js application using pnpm
+# Override NPM registry again for any build-time installs
+RUN echo "registry=https://registry.npmjs.org/" > .npmrc
+
+# Build the application
 RUN pnpm run build
 
-# Expose the port on which the application will run (default for Next.js is 3000)
+# Stage 3: Runner
+FROM node:24-alpine AS runner
+WORKDIR /app
+
+# Set production environment
+ENV NODE_ENV=production
+
+# Create a non-root user
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
+# Copy standalone output from builder
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+USER nextjs
+
+# Expose the port
 EXPOSE 3000
 
-# Define the command to start the application using pnpm
-CMD ["pnpm", "start"]
+# Start the application using the standalone server
+CMD ["node", "server.js"]

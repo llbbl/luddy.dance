@@ -20,14 +20,15 @@ A fun Next.js web app showcasing 10 hours of Ludwig's iconic dance. Built with m
 ## 🚀 Tech Stack
 
 ### Core
-- **Framework**: [Next.js 15.5.3](https://nextjs.org) with React 19
-- **Language**: TypeScript
-- **Styling**: [Tailwind CSS 4.1.13](https://tailwindcss.com)
+- **Framework**: [Next.js 16.0.3](https://nextjs.org) with React 19.2
+- **Language**: TypeScript 5.9
+- **Styling**: [Tailwind CSS 4.1.17](https://tailwindcss.com)
+- **Runtime**: Node.js 24.x
 - **Package Manager**: [pnpm](https://pnpm.io)
 
 ### Development & Quality
-- **Linting**: [Biome](https://biomejs.dev) for code quality and formatting
-- **Testing**: [Vitest](https://vitest.dev) + [React Testing Library](https://testing-library.com)
+- **Linting**: [Biome 2.3](https://biomejs.dev) for code quality and formatting
+- **Testing**: [Vitest 4.0](https://vitest.dev) + [React Testing Library](https://testing-library.com)
 - **Bundle Analysis**: [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
 
 ### Monitoring & Performance
@@ -37,14 +38,14 @@ A fun Next.js web app showcasing 10 hours of Ludwig's iconic dance. Built with m
 
 ### DevOps
 - **CI/CD**: GitHub Actions with automated testing, linting, and performance monitoring
-- **Containerization**: Docker with multi-stage builds
-- **Deployment**: Vercel (inferred from preview environment detection)
+- **Containerization**: Optimized Docker with multi-stage builds (Alpine-based, 234MB)
+- **Node Version Testing**: CI matrix testing on Node 20.x, 22.x, and 24.x
 
 ## 🏃‍♂️ Quick Start
 
 ### Prerequisites
-- **Node.js**: 22.x or later
-- **pnpm**: Latest version
+- **Node.js**: 24.x (recommended) or 20.x/22.x
+- **pnpm**: Latest version (10.x+)
 
 ### Installation
 
@@ -128,28 +129,26 @@ luddy.dance/
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Docker (Recommended)
 
-The app is optimized for Vercel deployment:
+The app uses an optimized multi-stage Docker build:
 
-```bash
-# Deploy to Vercel
-vercel
-
-# Or connect GitHub repository for automatic deployments
-```
-
-### Docker
-
-Build and run with Docker:
+**Features**:
+- 3-stage build (deps → builder → runner)
+- Alpine Linux base image (minimal size)
+- Next.js standalone output mode
+- Non-root user for security
+- **78% size reduction** (1.05GB → 234MB)
 
 ```bash
 # Build image
-docker buildx build --load -t luddy-local .
+docker buildx build --load -t luddy-dance .
 
 # Run container
-docker run -p 3000:3000 luddy-local
+docker run -p 3000:3000 luddy-dance
 ```
+
+**Note**: The Dockerfile includes registry override for public npm registry to ensure builds work in CI/CD environments.
 
 ### Self-Hosting
 
@@ -251,7 +250,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - **Ludwig** for the iconic dance moves
 - **Next.js** team for the amazing framework
-- **Vercel** for hosting and deployment platform
 - **Open source community** for the excellent tools and libraries
 
 ---
