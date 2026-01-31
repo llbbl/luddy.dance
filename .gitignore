@@ -4,6 +4,11 @@
 
 .idea/*
 .vscode/*
+.claude/
+.agent/
+.gemini/
+GEMINI.md
+AGENT.md
 
 # dependencies
 /node_modules
