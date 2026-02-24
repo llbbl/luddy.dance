@@ -9,7 +9,7 @@ export default function Component() {
 
   useEffect(() => {
     // Set user context on page load
-    const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const sessionId = `session_${Date.now()}_${crypto.randomUUID().slice(0, 9)}`;
     setUserContext(undefined, sessionId, {
       page: 'home',
       userAgent: navigator.userAgent,
@@ -52,7 +52,7 @@ export default function Component() {
       </header>
       <main className="flex justify-center w-full mt-6 px-4">
         <section
-          className="aspect-youtube w-full flex justify-center relative"
+          className="aspect-video w-full flex justify-center relative"
           style={{ maxWidth: '80vw' }}
           aria-label="Ludwig Luddy dance video player"
         >
@@ -68,10 +68,9 @@ export default function Component() {
           )}
           <iframe
             ref={iframeRef}
-            className="absolute top-0 left-0 w-full h-auto"
+            className="absolute top-0 left-0 w-full h-auto border-0"
             src={shouldLoadIframe ? 'https://www.youtube.com/embed/L3Ucukzbp6k' : undefined}
             title="10 hours of Ludwig doing the Luddy dance - YouTube video player"
-            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             loading="lazy"

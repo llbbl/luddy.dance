@@ -30,8 +30,13 @@ out
 *.sublime-workspace
 
 # Ignore testing files
+tests
 coverage
 .nyc_output
+
+# Ignore CI and documentation
+.github
+*.md
 
 # Ignore logs and temporary files
 logs

@@ -1,6 +1,5 @@
 // components/layout.tsx
 
-import { Inter } from 'next/font/google';
 import type React from 'react';
 import Copyright from '@/components/Copyright';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
@@ -9,7 +8,6 @@ import SEO from '@/components/SEO';
 interface LayoutProps {
   children: React.ReactNode;
 }
-const _inter = Inter({ subsets: ['latin'] });
 
 const seoData = {
   title: '10 hours of Ludwig doing the Luddy! 🕺',
