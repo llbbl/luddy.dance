@@ -9,7 +9,7 @@ export default function Component() {
 
   useEffect(() => {
     // Set user context on page load
-    const sessionId = `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+    const sessionId = `session_${Date.now()}_${crypto.randomUUID().slice(0, 9)}`;
     setUserContext(undefined, sessionId, {
       page: 'home',
       userAgent: navigator.userAgent,
