@@ -5,6 +5,7 @@ global.IntersectionObserver = class IntersectionObserver {
   readonly root: Element | null = null;
   readonly rootMargin: string = '';
   readonly thresholds: ReadonlyArray<number> = [];
+  readonly scrollMargin: string = '';
 
   constructor(public callback: IntersectionObserverCallback) {}
 
