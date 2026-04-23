@@ -20,28 +20,29 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
-    "logan-logger": "^1.1.14",
+    "logan-logger": "^1.1.16",
     "next": "16.1.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
+    "@biomejs/biome": "^2.4.12",
     "@next/bundle-analyzer": "^16.1.6",
-    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/postcss": "^4.2.4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.3.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.4",
-    "@vitest/ui": "^4.0.18",
-    "jsdom": "^28.1.0",
-    "postcss": "^8.5.6",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/ui": "^4.1.5",
+    "jsdom": "^29.0.2",
+    "postcss": "^8.5.10",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.18"
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5"
   },
   "pnpm": {
     "overrides": {

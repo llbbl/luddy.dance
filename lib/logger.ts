@@ -165,8 +165,8 @@ export const reportError = (error: Error, context?: LogMetadata) => {
   const errorMeta = {
     context,
     timestamp: new Date().toISOString(),
-    userAgent: typeof window !== 'undefined' ? window.navigator?.userAgent : 'server',
-    url: typeof window !== 'undefined' ? window.location?.href : 'server',
+    userAgent: typeof window === 'undefined' ? 'server' : window.navigator?.userAgent,
+    url: typeof window === 'undefined' ? 'server' : window.location?.href,
   };
 
   log.appError(error, errorMeta);
