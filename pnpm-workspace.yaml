@@ -1,0 +1,18 @@
+# Supply-chain hardening (pnpm 11 defaults, made explicit)
+minimumReleaseAge: 1440 # block packages < 24 h old
+blockExoticSubdeps: true # no git/tarball transitive deps
+strictDepBuilds: true # fail install on unapproved postinstalls
+verifyDepsBeforeRun: install # re-check lockfile before `pnpm run`
+
+# Postinstall allowlist — explicitly approve every dep with a build script.
+# Empty map = block all. Add entries only after auditing the script.
+allowBuilds:
+  "@biomejs/biome": true
+  "@tailwindcss/oxide": true
+  sharp: true
+
+overrides:
+  js-yaml: ">=4.1.1"
+  lodash: ">=4.17.23"
+  lodash-es: ">=4.17.23"
+  picomatch: ">=4.0.4"
