@@ -6,7 +6,6 @@ const Copyright = () => {
         fontWeight: '400',
         fontSize: '1.4rem',
         lineHeight: '2.4rem',
-        color: 'white',
         gap: '1rem',
       }}
     >

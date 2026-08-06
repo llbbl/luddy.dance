@@ -7,6 +7,7 @@
 .claude/
 .agent/
 .gemini/
+_/
 GEMINI.md
 AGENT.md
 

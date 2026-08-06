@@ -2,7 +2,7 @@
   "name": "luddy.dance",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@11.1.3",
+  "packageManager": "pnpm@11.20.0",
   "engines": {
     "node": ">=22"
   },
@@ -22,27 +22,27 @@
   },
   "dependencies": {
     "logan-logger": "^1.1.16",
-    "next": "16.2.6",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "next": "16.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.15",
-    "@next/bundle-analyzer": "^16.2.6",
-    "@tailwindcss/postcss": "^4.3.0",
+    "@biomejs/biome": "^2.5.7",
+    "@next/bundle-analyzer": "^16.3.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.9.0",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.2",
-    "@vitest/ui": "^4.1.6",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "@vitest/ui": "^4.1.10",
     "jsdom": "^29.1.1",
-    "postcss": "^8.5.14",
-    "sharp": "^0.34.5",
-    "tailwindcss": "^4.3.0",
+    "postcss": "8.5.25",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "vite": "^8.0.13",
-    "vitest": "^4.1.6"
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
   }
 }

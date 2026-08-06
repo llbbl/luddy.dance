@@ -2,10 +2,13 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { log, reportError, setUserContext, trackPerformance } from '@/lib/logger';
 
+const VIDEO_URL = 'https://www.youtube.com/embed/L3Ucukzbp6k';
+
 export default function Component() {
   const [isIframeLoaded, setIframeLoaded] = useState(false);
   const [shouldLoadIframe, setShouldLoadIframe] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeLoadStartedAtRef = useRef<number | null>(null);
 
   useEffect(() => {
     // Set user context on page load
@@ -23,6 +26,7 @@ export default function Component() {
         const [entry] = entries;
         if (entry.isIntersecting) {
           const startTime = performance.now();
+          iframeLoadStartedAtRef.current = startTime;
           setShouldLoadIframe(true);
           trackPerformance('iframe_intersection', performance.now() - startTime);
           log.componentMount('VideoIframe');
@@ -69,24 +73,32 @@ export default function Component() {
           <iframe
             ref={iframeRef}
             className="absolute top-0 left-0 w-full h-auto border-0"
-            src={shouldLoadIframe ? 'https://www.youtube.com/embed/L3Ucukzbp6k' : undefined}
+            src={shouldLoadIframe ? VIDEO_URL : undefined}
             title="10 hours of Ludwig doing the Luddy dance - YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             loading="lazy"
-            onLoad={() => {
-              const loadTime = performance.now();
+            onLoad={(event) => {
+              const iframeLoadStartedAt = iframeLoadStartedAtRef.current;
+              if (
+                !shouldLoadIframe ||
+                event.currentTarget.getAttribute('src') !== VIDEO_URL ||
+                iframeLoadStartedAt === null
+              ) {
+                return;
+              }
+
+              iframeLoadStartedAtRef.current = null;
               setIframeLoaded(true);
-              trackPerformance('iframe_load', loadTime);
+              trackPerformance('iframe_load', performance.now() - iframeLoadStartedAt);
               log.componentMount('VideoIframeContent');
             }}
             onError={(e) => {
               reportError(new Error('iframe failed to load'), {
-                src: shouldLoadIframe ? 'https://www.youtube.com/embed/L3Ucukzbp6k' : 'undefined',
+                src: shouldLoadIframe ? VIDEO_URL : 'undefined',
                 event: e.type,
               });
             }}
-            role="application"
             aria-label="Embedded YouTube video: 10 hours of Ludwig doing the Luddy dance"
             style={{
               aspectRatio: '16 / 9',
