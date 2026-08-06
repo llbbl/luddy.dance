@@ -9,6 +9,11 @@ const nextConfig = {
   // Enable standalone output for optimized Docker builds
   output: 'standalone',
 
+  // Keep Turbopack scoped to this repository when parent directories contain lockfiles.
+  turbopack: {
+    root: import.meta.dirname,
+  },
+
   // Security headers configuration
   async headers() {
     return [
