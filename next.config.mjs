@@ -4,6 +4,25 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Next's hydration bootstrap emits inline scripts, so 'unsafe-inline' is required
+// until nonce-based CSP is wired through middleware. Turbopack's dev server also
+// needs 'unsafe-eval'; the production client bundle does not.
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  isProduction ? null : "'unsafe-eval'",
+  'https://www.youtube.com',
+  'https://www.google.com',
+  'https://www.gstatic.com',
+  'https://googleads.g.doubleclick.net',
+  'https://stats.g.doubleclick.net',
+  'https://static.doubleclick.net',
+]
+  .filter(Boolean)
+  .join(' ');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Enable standalone output for optimized Docker builds
@@ -26,7 +45,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com https://www.google.com https://www.gstatic.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://static.doubleclick.net",
+              `script-src ${scriptSrc}`,
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https://i.ytimg.com https://yt3.ggpht.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://static.doubleclick.net",
@@ -51,12 +70,6 @@ const nextConfig = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
-          },
-
-          // Enable XSS protection
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
           },
 
           // Referrer policy for privacy

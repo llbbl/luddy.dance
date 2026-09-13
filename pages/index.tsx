@@ -12,7 +12,11 @@ export default function Component() {
 
   useEffect(() => {
     // Set user context on page load
-    const sessionId = `session_${Date.now()}_${crypto.randomUUID().slice(0, 9)}`;
+    const randomSuffix =
+      typeof globalThis.crypto?.randomUUID === 'function'
+        ? globalThis.crypto.randomUUID().slice(0, 9)
+        : Math.random().toString(36).slice(2, 11);
+    const sessionId = `session_${Date.now()}_${randomSuffix}`;
     setUserContext(undefined, sessionId, {
       page: 'home',
       userAgent: navigator.userAgent,
@@ -21,14 +25,16 @@ export default function Component() {
 
     log.appReady({ page: 'home', sessionId });
 
+    const mountedAt = performance.now();
+
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting) {
-          const startTime = performance.now();
-          iframeLoadStartedAtRef.current = startTime;
+          const intersectedAt = performance.now();
+          iframeLoadStartedAtRef.current = intersectedAt;
           setShouldLoadIframe(true);
-          trackPerformance('iframe_intersection', performance.now() - startTime);
+          trackPerformance('iframe_intersection', intersectedAt - mountedAt);
           log.componentMount('VideoIframe');
           observer.disconnect();
         }
@@ -67,7 +73,7 @@ export default function Component() {
               src="/luddy.svg"
               fill
               priority
-              sizes="(max-width: 80vw) 100vw, 80vw"
+              sizes="80vw"
             />
           )}
           <iframe

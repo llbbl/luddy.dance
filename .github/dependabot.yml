@@ -6,10 +6,11 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 3
-    # Allow all update types including major versions
-    allow:
-      - dependency-type: "all"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    # Version updates: majors and minors only. This does not gate security
+    # updates, which Dependabot opens for vulnerable deps regardless.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
     labels:
       - "dependencies"
     commit-message:

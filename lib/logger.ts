@@ -76,35 +76,6 @@ const fallbackLog = {
   },
 };
 
-// LoganLogger class for structured logging with context
-export class LoganLogger {
-  private context: string;
-
-  constructor(context: string) {
-    this.context = context;
-  }
-
-  private formatMessage(message: string): string {
-    return `[${this.context}] ${message}`;
-  }
-
-  debug(message: string, meta?: LogMetadata) {
-    fallbackLog.debug(this.formatMessage(message), meta);
-  }
-
-  info(message: string, meta?: LogMetadata) {
-    fallbackLog.info(this.formatMessage(message), meta);
-  }
-
-  warn(message: string, meta?: LogMetadata) {
-    fallbackLog.warn(this.formatMessage(message), meta);
-  }
-
-  error(message: string, meta?: LogMetadata) {
-    fallbackLog.error(this.formatMessage(message), meta);
-  }
-}
-
 // Enhanced logging methods with context that extend Logan Logger
 export const log = {
   // Basic logging methods from Logan Logger (with fallback for preview environments)
@@ -113,10 +84,6 @@ export const log = {
   warn: fallbackLog.warn,
   error: fallbackLog.error,
   // App lifecycle events
-  appStart: (meta?: LogMetadata) => {
-    fallbackLog.info('Application starting', { event: 'app_start', ...meta });
-  },
-
   appReady: (meta?: LogMetadata) => {
     fallbackLog.info('Application ready', { event: 'app_ready', ...meta });
   },
@@ -140,25 +107,11 @@ export const log = {
     fallbackLog.debug('Component mounted', { event: 'component_mount', component, ...meta });
   },
 
-  componentUnmount: (component: string, meta?: LogMetadata) => {
-    fallbackLog.debug('Component unmounted', { event: 'component_unmount', component, ...meta });
-  },
-
   // Performance metrics
   performance: (metric: string, value: number, meta?: LogMetadata) => {
     fallbackLog.info('Performance metric', { event: 'performance', metric, value, ...meta });
   },
-
-  // Web Vitals
-  webVital: (name: string, value: number, rating: string, meta?: LogMetadata) => {
-    fallbackLog.info('Web Vital metric', { event: 'web_vital', name, value, rating, ...meta });
-  },
 };
-
-// Legacy exports for backward compatibility
-export const logger = new LoganLogger('luddy-dance');
-export const errorLogger = new LoganLogger('luddy-dance:error');
-export const performanceLogger = new LoganLogger('luddy-dance:performance');
 
 // Error reporting utility using logan-logger's appError method
 export const reportError = (error: Error, context?: LogMetadata) => {
