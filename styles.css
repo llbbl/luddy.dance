@@ -40,7 +40,7 @@ h1 {
 
 .video {
   position: relative;
-  width: min(80vw, 960px);
+  width: 80vw;
   aspect-ratio: 16 / 9;
   margin: 1.5rem auto 0;
   overflow: hidden;
@@ -83,10 +83,4 @@ footer a {
   color: inherit;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.3rem;
-}
-
-@media (max-width: 40rem) {
-  .video {
-    width: 100%;
-  }
 }
