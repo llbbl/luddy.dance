@@ -12,10 +12,11 @@ export default function Component() {
 
   useEffect(() => {
     // Set user context on page load
-    const randomSuffix =
-      typeof globalThis.crypto?.randomUUID === 'function'
-        ? globalThis.crypto.randomUUID().slice(0, 9)
-        : Math.random().toString(36).slice(2, 11);
+    const randomBytes = new Uint8Array(8);
+    globalThis.crypto.getRandomValues(randomBytes);
+    const randomSuffix = Array.from(randomBytes, (byte) => byte.toString(16).padStart(2, '0'))
+      .join('')
+      .slice(0, 9);
     const sessionId = `session_${Date.now()}_${randomSuffix}`;
     setUserContext(undefined, sessionId, {
       page: 'home',
