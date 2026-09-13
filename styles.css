@@ -1,0 +1,92 @@
+:root {
+  color: #111827;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #f59e0b, #f472b6);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: clamp(4rem, 10vw, 8rem) 1rem 1.5rem;
+}
+
+main {
+  flex: 1;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.video {
+  position: relative;
+  width: min(80vw, 960px);
+  aspect-ratio: 16 / 9;
+  margin: 1.5rem auto 0;
+  overflow: hidden;
+}
+
+.video__placeholder,
+.video__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video__placeholder {
+  object-fit: cover;
+}
+
+.video__frame {
+  visibility: hidden;
+}
+
+.video[data-loaded] .video__placeholder {
+  display: none;
+}
+
+.video[data-loaded] .video__frame {
+  visibility: visible;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+footer a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3rem;
+}
+
+@media (max-width: 40rem) {
+  .video {
+    width: 100%;
+  }
+}

@@ -1,0 +1,14 @@
+:{$PORT:8080} {
+	root * /usr/share/caddy
+	encode zstd gzip
+
+	header {
+		Content-Security-Policy "default-src 'self'; frame-src https://www.youtube-nocookie.com; img-src 'self' data: https://i.ytimg.com https://yt3.ggpht.com; script-src 'self'; style-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+	}
+
+	file_server
+}
