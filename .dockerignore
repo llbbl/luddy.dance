@@ -2,19 +2,8 @@
 .git
 .gitignore
 
-# Ignore Docker configuration
-Dockerfile
-.dockerignore
-
-# Ignore Node.js dependencies
+# Local packages are not part of the static site image.
 node_modules
-npm-debug.log
-yarn-error.log
-pnpm-debug.log
-
-# Ignore build artifacts
-.next
-out
 
 # Ignore development files
 .env
@@ -28,15 +17,6 @@ out
 .idea
 *.sublime-project
 *.sublime-workspace
-
-# Ignore testing files
-tests
-coverage
-.nyc_output
-
-# Ignore CI and documentation
-.github
-*.md
 
 # Ignore logs and temporary files
 logs

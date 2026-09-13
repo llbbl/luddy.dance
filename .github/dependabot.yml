@@ -1,16 +1,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 3
-    # Version updates: majors and minors only. This does not gate security
-    # updates, which Dependabot opens for vulnerable deps regardless.
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-patch"]
+      interval: "monthly"
     labels:
       - "dependencies"
     commit-message:

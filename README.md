@@ -4,28 +4,20 @@ Ten hours of Ludwig doing the Luddy.
 
 **[Watch at luddy.dance](https://luddy.dance)**
 
-Built with Next.js, React, TypeScript, and Tailwind CSS. The YouTube embed loads lazily when it enters the viewport.
+Built as a dependency-free static site and served by Caddy. The YouTube embed loads only when it reaches the viewport.
 
-## Quick start
+## Local preview
 
-Requires Node.js 22 or newer and pnpm 11.
-
-```bash
-corepack enable
-pnpm install
-pnpm dev
-```
-
-Open [localhost:3000](http://localhost:3000).
+Requires Docker.
 
 ```bash
-pnpm lint
-pnpm test
-pnpm build
+docker compose up --build
 ```
+
+Open [localhost:8080](http://localhost:8080).
 
 ## Documentation
 
-- [Development guide](docs/development.md)
 - [Deployment guide](docs/deployment.md)
-- [Contributing](CONTRIBUTING.md)
+- [Development guide](docs/development.md)
+- [Contributing](docs/contributing.md)

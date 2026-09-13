@@ -1,28 +1,12 @@
 # Deployment
 
-## Next.js production server
+Railway builds the included `Dockerfile`. It contains only version-pinned Caddy and the static site files; there is no Node, Bun, package installation, or application build step.
 
-```bash
-pnpm install --frozen-lockfile
-pnpm build
-pnpm start
-```
+The `Caddyfile` listens on Railway's `PORT` variable (or port 8080 locally) and applies the site's security headers.
 
-Set `NODE_ENV=production`. Browser logging is disabled by default; set `NEXT_PUBLIC_ENABLE_LOGGING=true` only when production diagnostics are needed.
-
-## Docker
-
-The repository includes a multi-stage Dockerfile that builds Next.js standalone output and runs it as a non-root user.
+For a local production-equivalent container:
 
 ```bash
 docker build -t luddy-dance .
-docker run --rm -p 3000:3000 luddy-dance
+docker run --rm -e PORT=8080 -p 8080:8080 luddy-dance
 ```
-
-Docker Compose is also available:
-
-```bash
-docker compose up --build
-```
-
-Both options expose the application on [localhost:3000](http://localhost:3000).
