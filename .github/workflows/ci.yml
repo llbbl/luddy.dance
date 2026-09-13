@@ -23,5 +23,8 @@ jobs:
       - name: Serve and verify the home page
         run: |
           docker run --detach --rm --name luddy-dance-ci --publish 8080:8080 -e PORT=8080 luddy-dance:ci
-          curl --fail --retry 10 --retry-connrefused http://localhost:8080/
-          docker stop luddy-dance-ci
+          trap 'docker stop luddy-dance-ci' EXIT
+          if ! curl --fail --show-error --retry 10 --retry-delay 1 --retry-all-errors http://localhost:8080/; then
+            docker logs luddy-dance-ci
+            exit 1
+          fi
