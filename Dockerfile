@@ -1,4 +1,4 @@
-FROM caddy:2.11.4-alpine
+FROM caddy:2.11.6-alpine
 
 RUN addgroup -S caddy && adduser -S -G caddy caddy
 
